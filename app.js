@@ -111,11 +111,13 @@ app.put('/archivo/:mayuscula', (req, res) => {
     /* Leemos archivo */
     fs.readFile('nombres.txt', 'utf8', (err, data) => {
         if (err) {
-            console.log(err);
+            res.json({
+                error: err.message
+            })
         } else {
             /* Obtengo un array de los archivos con split de saltos de línea (\n) */
             const nameArrays = data.split('\n');
-            let newNames = ["liam", "noah", "oliver",];
+            let newNames = [];
             /* Evalúo si el parámetro está en 1 */
             if (+req.params.mayuscula) {
                 /* Mapéo el array para convertir todo en mayúsculas */
@@ -130,7 +132,9 @@ app.put('/archivo/:mayuscula', (req, res) => {
             /* Mandamos a llamar  el writeFile enviandole el nuevo contenido*/
             fs.writeFile('nombres.txt', contenido, (err) => {
                 if (err) {
-                    console.log(err);
+                    res.json({
+                        error: err.message
+                    })
                 } else {
                     res.send(
                         {
@@ -139,7 +143,6 @@ app.put('/archivo/:mayuscula', (req, res) => {
                     )
                 }
             });
-
         }
     });
 });
