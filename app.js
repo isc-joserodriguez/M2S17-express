@@ -4,7 +4,9 @@ const express = require('express');
 /* 2.- Inicializar la función de express */
 const app = express();
 
-/* 3.- Pendiente */
+/* 3.- Middleware */
+app.use(express.json());
+
 
 /* 4.- Crear rutas */
 app.get('/', (req, res) => {
@@ -15,14 +17,6 @@ app.get('/mensaje', (req, res) => {
     res.send(
         {
             mensaje: 'Hola desde /mensaje'
-        }
-    )
-});
-
-app.get('/:id', (req, res) => {
-    res.send(
-        {
-            mensaje: `${req.params.id} desde /:id`
         }
     )
 });
@@ -43,11 +37,27 @@ app.get('/query', (req, res) => {
     });
 });
 
+app.get('/body', (req, res) => {
+    console.log(req.body)
+    const param1 = req.body.hola || 'No existe ningun parámetro';
+    res.json({
+        mensaje: param1
+    });
+});
+
 app.get('/ruta/:nombre/:apellido', (req, res) => {
     const { nombre, apellido } = req.params
     res.json({
         mensaje: `Hola, ${nombre} ${apellido}`
     });
+});
+
+app.get('/:id', (req, res) => {
+    res.send(
+        {
+            mensaje: `${req.params.id} desde /:id`
+        }
+    )
 });
 
 /* 5.- Iniciar servidor */
