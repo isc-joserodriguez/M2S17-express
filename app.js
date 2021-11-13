@@ -7,6 +7,9 @@ const app = express();
 /* 3.- Pendiente */
 
 /* 4.- Crear rutas */
+app.get('/', (req, res) => {
+    res.send('Instrucciones')
+});
 
 app.get('/ruta', (req, res) => {
     res.send('Hola desde la ruta!!')
